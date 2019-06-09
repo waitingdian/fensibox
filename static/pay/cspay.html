@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="pay/images/pay.css">
+<script type="text/javascript" src="pay/js/jquery.min.js"></script>
+<title>测试</title>
+</head>
+<body>
+<div class="paybox">
+ <table  border="0" align="center" cellpadding="8" cellspacing="1">
+              <tbody>
+                            <tr>
+                <td colspan="2"><div align="center"><strong>请选择支付金额</strong></div></td>
+              </tr>
+                            <tr>
+                <td nowrap><div align="right">金额：
+                  </div></td>
+                <td id="moneys"><label><input name="amount2" type="text" id="amount2"  onclick="chargeFee2();"  onchange="chargeFee2();"  onkeyup="chargeFee2();"   value="1" size="5">元</label></td>
+              </tr>
+
+              <tr>
+                <td><div align="right">类型：</div></td>
+                <td id="typs">
+                  <label >
+                    <div class="paytyp alipay">
+                      <input name="typs" type="radio" value="2" >支付宝扫码
+                    </div>
+                  </label>
+                </td>
+              </tr><tr>
+                <td><div align="right"></div></td>
+                <td><form name="form1" id="form1" method="get" target="_blank" action="http://pay.fensibox.com/pay/pay.php?appid=2019060258&payno=15138900902&money=1&typ=2&submit=%E6%94%AF%E4%BB%98%E5%AE%9D%E6%89%AB%E7%A0%81&back_url=/recharge/record">
+
+                <input name="appid" type="hidden" id="appid" value="您的扫码应用APPID">
+				<input name="payno" type="hidden" id="payno" value="用户付款说明">
+				<input name="money" type="hidden" id="money" value="">
+				<input name="typ" type="hidden" id="typ" value="">
+                <label>
+                 <input type="buttom" name="submit" id="submit" class="button" value="支付宝扫码">
+                 <input style="display: none" type="submit" id="submitBtn" class="button">
+                </label>
+              <input type="hidden" name="back_url" id="back_url" value="/recharge/record" /></form>
+                </td>
+              </tr>
+            </tbody></table>
+</div>
+<script type="text/javascript">
+var mr_money1='110';//输入默认金额
+var mr_money2='110';//选择默认金额
+var mr_money4='110';//选择默认金额
+var mr_money5='110';//选择默认金额
+var mr_typ='2';//默认支付方式 1支付宝转账（填写备注） 2支付扫码免备注 21支付宝扫码填写金额 3财付通电脑转账  4手机QQ钱包免备注 41手Q扫码填写金额 5微信免备注 51微信扫码填写金额
+var mr_typ_name='支付宝扫码';//默认按钮名称
+var money_html1='<label><input type="text" name="amount2"  id="amount2"   onclick="chargeFee2();" onchange="chargeFee2();"   onkeyup="chargeFee2();" value="'+mr_money1+'" size="5">元</label>';
+var moneys2='1,2,5,8,10,32,40,110,200,360,400,500,600,660,999999';
+var moneys4='1,2,5,8,10,32,40,110,200,360,400,500,600,660,999999';
+var moneys5='1,2,5,8,10,32,40,110,200,360,400,500,600,660,999999';
+var money_html2='';
+var money_html4='';
+var money_html5='';
+var strs= new Array(); //定义一数组
+	if(moneys2==''){
+	 money_html2='没有可用二维码金额！！！';
+	}else{
+
+		strs=moneys2.split(","); //字符分割
+		for (i=0;i<strs.length ;i++ )
+		{
+		if(strs[i]==999999){
+			money_html2+='<label><div class="moneyfl"><input type="text" name="amount2" id="amount2" value="输入金额"  style="font-size: 16px;width:65px;height:16px;color: #666;"  onclick="$(this.parentNode).addClass(\'cknow\');chargeFee2();" onchange="chargeFee2();"   onkeyup="chargeFee2();" ></div></label>';
+		}else{
+		money_html2+='<label><div class="moneyfl"><input type="radio" name="amount1" value="'+strs[i]+'"  onclick="chargeFee('+strs[i]+');" >'+strs[i]+'元</div></label>';}
+		}
+	}
+	if(moneys4==''){
+	 money_html4='没有可用二维码金额！！！';
+	}else{
+ //var strs= new Array(); //定义一数组
+	strs=moneys4.split(","); //字符分割
+		for (i=0;i<strs.length ;i++ )
+		{
+		if(strs[i]==999999){
+			money_html4+='<label><div class="moneyfl"><input type="text" name="amount2" id="amount2" value="输入金额"  style="font-size: 16px;width:65px;height:16px;color: #666;"  onclick="$(this.parentNode).addClass(\'cknow\');chargeFee2();" onchange="chargeFee2();"   onkeyup="chargeFee2();" ></div></label>';
+		}else{
+		money_html4+='<label><div class="moneyfl"><input type="radio" name="amount1" value="'+strs[i]+'"  onclick="chargeFee('+strs[i]+');" >'+strs[i]+'元</div></label>';
+		}
+		}
+	}
+		if(moneys5==''){
+	 money_html5='没有可用二维码金额！！！';
+	}else{
+ 	//var strs= new Array(); //定义一数组
+	strs=moneys5.split(","); //字符分割
+		for (i=0;i<strs.length ;i++ )
+		{
+		if(strs[i]==999999){
+			money_html5+='<label><div class="moneyfl"><input type="text" name="amount2" id="amount2" value="输入金额"  style="font-size: 16px;width:65px;height:16px;color: #666;"  onclick="$(this.parentNode).addClass(\'cknow\');chargeFee2();"  onchange="chargeFee2();"  onkeyup="chargeFee2();" ></div></label>';
+		}else{
+		money_html5+='<label><div class="moneyfl"><input type="radio" name="amount1" value="'+strs[i]+'"  onclick="chargeFee('+strs[i]+');" >'+strs[i]+'元</div></label>';}
+		}
+	}
+function chargeFee(m){
+	$("#amount2").parent().removeClass("cknow");
+	$("#money").val(m);
+}
+function chargeFee2(){
+	$("input[name='amount1']").each(function(){
+		this.checked=false;
+		$(this.parentNode).removeClass("cknow");
+	});
+	if($('#typ').val()!=1&&$('#typ').val()!=3){
+	$("#amount2").val($("#amount2").val().replace(/[^\d]/g,''));
+	}
+	 $("#money").val($("#amount2").val());
+}
+$('#submit').on('click', function () {
+  if($('#money').val()==''){
+    alert('请输入或者选择金额');
+    return false;
+  }
+  if($('#money').val()<0){
+    alert('最低充值金额为1');
+    return false;
+  }
+  if($('#money').val()>100000){
+    alert('最大充值金额为100000');
+    return false;
+  }
+  if($('#typ').val()==''){
+    alert('请选择支付方式');
+    return false;
+  }
+  let token = sessionStorage.getItem('token');
+  if(token){
+    token = 'Bearer ' + token
+    // xhr.setRequestHeader(`token:${token}`);
+  }
+  $.ajax({
+    type : "post",//向后台请求的方式，有post，get两种方法
+    url : "/api/deposit/add",//url填写的是请求的路径
+    cache : false,//缓存是否打开
+    data: JSON.stringify({money: $('#money').val()}),
+    headers: {
+      "Authorization": token,//此处放置请求到的用户token
+      'Content-Type': 'application/json'
+    },
+    contentType: "application/json",
+    dataType : 'json',//请求的数据类型
+    success : function(res) {//请求的返回成功的方法
+      if (res && res.code == 200) {
+        let appId = res.data.appId
+        let money = res.data.money
+        let payno = res.data.payno
+        $("#appid").val(appId)
+        $("#money").val(money)
+        $("#payno").val(payno)
+        $('#submitBtn').click()
+        // return true;
+      } else {
+        alert(res.msg);
+      }
+    }
+  });
+})
+
+function checkform(){
+	if($('#money').val()==''){
+		alert('请输入或者选择金额');
+		return false;
+	}
+	if($('#money').val()<0){
+	   alert('最低充值金额为1');
+		return false;
+	}
+	if($('#money').val()>100000){
+	   alert('最大充值金额为100000');
+		return false;
+	}
+    if($('#typ').val()==''){
+		alert('请选择支付方式');
+		return false;
+	}
+  let token = sessionStorage.getItem('token');
+  if(token){
+    token = 'Bearer ' + token
+    // xhr.setRequestHeader(`token:${token}`);
+  }
+  $.ajax({
+    type : "post",//向后台请求的方式，有post，get两种方法
+    url : "/api/deposit/add",//url填写的是请求的路径
+    cache : false,//缓存是否打开
+    data: JSON.stringify({money: $('#money').val()}),
+    headers: {
+      "Authorization": token,//此处放置请求到的用户token
+      'Content-Type': 'application/json'
+    },
+    contentType: "application/json",
+    dataType : 'json',//请求的数据类型
+    success : function(res) {//请求的返回成功的方法
+      if (res && res.code == 200) {
+        // return true;
+      } else {
+        alert(res.msg);
+      }
+    }
+  });
+	// return true;
+}
+
+$(document).ready(function() {
+//处理默认
+    $("input[name='typs']").each(function(){
+		 if(mr_typ==2){
+			$("#moneys").html(money_html2);
+         }else if(mr_typ==4){
+			 $("#moneys").html(money_html4);
+		 }else if(mr_typ==5){
+			 $("#moneys").html(money_html5);
+		 }else{
+	        $("#moneys").html(money_html1);
+         }
+		if(this.value==mr_typ){
+			this.checked=true;
+			$("#typ").val(this.value);
+		    $(this.parentNode).addClass("cknow");
+		}
+		$('#submit').val(mr_typ_name);
+   });
+  //  $('#money').val('');
+    if(mr_typ==2||mr_typ==4||mr_typ==5){
+        $('#money').val('');
+	 }
+   $("input[name='amount1']").each(function(){
+	   if(mr_typ==2){
+		if(this.value==mr_money2){
+			$('#money').val(this.value);
+			this.checked=true;
+		    $(this.parentNode).addClass("cknow");
+		}else{
+			this.checked=false;
+		   $(this.parentNode).removeClass("cknow");
+		}
+	   }else if(mr_typ==4){
+		 if(this.value==mr_money4){
+			$('#money').val(this.value);
+			this.checked=true;
+		    $(this.parentNode).addClass("cknow");
+		}else{
+			this.checked=false;
+		   $(this.parentNode).removeClass("cknow");
+		}
+	   }else if(mr_typ==5){
+		  if(this.value==mr_money5){
+			$('#money').val(this.value);
+			this.checked=true;
+		    $(this.parentNode).addClass("cknow");
+		}else{
+			this.checked=false;
+		   $(this.parentNode).removeClass("cknow");
+		}
+	   }
+
+	});
+	 if(mr_typ==2){
+	 mr_money2=$("input[name='amount1']:checked").val();
+	 }
+	 if(mr_typ==4){
+	 mr_money4=$("input[name='amount1']:checked").val();
+	 }
+	 if(mr_typ==5){
+	 mr_money5=$("input[name='amount1']:checked").val();
+	 }
+//金额选择
+$("input[name='amount1']").live("click",function(){
+    $("input[name='amount1']").each(function(){
+		if(this.checked==true){
+		$(this.parentNode).addClass("cknow");
+		$('#money').val(this.value);
+
+		if($("input[name='typs']:checked").val()==2){
+		 mr_money2=this.value;
+		}
+		if($("input[name='typs']:checked").val()==4){
+		 mr_money4=this.value;
+		}
+		if($("input[name='typs']:checked").val()==5){
+		 mr_money5=this.value;
+		}
+		//chargeFee(m);
+		}else{
+		$(this.parentNode).removeClass("cknow");
+		}
+	});
+});
+//方式选择
+$("input[name='typs']").live("click",function(){
+	var typ=$("input[name='typs']:checked").val();
+	$("#typ").val(typ);
+	var m=$('#money').val();
+
+    $("input[name='typs']").each(function(){
+		if(this.checked==true){
+			if(($("#moneys").html()+' ').indexOf('name="amount1')<0){
+				if($('#money').val()!=''){
+					mr_money1=$('#money').val();
+				}
+			}else{
+				//if(typ==2)mr_money2=$('#money').val();
+				//if(typ==4)mr_money4=$('#money').val();
+				//if(typ==5)mr_money5=$('#money').val();
+			}
+		 if(this.value==1||this.value==3){
+			 if(mr_typ==1||mr_typ==3){
+			 }else{
+			  $("#moneys").html(money_html1);
+			 // $('#money').val(mr_money1);
+			 $('#amount2').val(m);
+			 $("#amount2").parent().addClass("cknow");
+			  $('#money').val($('#amount2').val());
+			 }
+			 $("input[name='amount1']").each(function(){
+			    $(this.parentNode).removeClass("cknow");
+			 });
+		 }else{
+			 if(mr_typ==1||mr_typ==3){
+				if(this.value==2)$("#moneys").html(money_html2);
+				if(this.value==4)$("#moneys").html(money_html4);
+				if(this.value==5)$("#moneys").html(money_html5);
+				$('#money').val('');
+			       $("input[name='amount1']").each(function(){
+					   if(typ==2){
+						  if(($('#moneys').html()+' ').indexOf('amount2')>0){
+							 $('#amount2').val((m+' ').split('.')[0].replace(' ',''));
+							  $('#money').val($('#amount2').val());
+						   }else{
+							   if(this.value==(m+' ').split('.')[0].replace(' ','')){
+								 this.checked=true;
+								$('#money').val(this.value);
+								  $(this.parentNode).addClass("cknow");
+							 }else{
+								this.checked=false;
+								$(this.parentNode).removeClass("cknow");
+							 }
+						   }
+					   }
+					   if(typ==4){
+							if(($('#moneys').html()+' ').indexOf('amount2')>0){
+							 $('#amount2').val((m+' ').split('.')[0].replace(' ',''));
+							 $("#amount2").parent().addClass("cknow");
+							  $('#money').val($('#amount2').val());
+						   }else{
+							   if(this.value==(m+' ').split('.')[0].replace(' ','')){
+								 this.checked=true;
+								$('#money').val(this.value);
+								  $(this.parentNode).addClass("cknow");
+							 }else{
+								this.checked=false;
+								$(this.parentNode).removeClass("cknow");
+							 }
+						   }
+					   }
+					   if(typ==5){
+							if(($('#moneys').html()+' ').indexOf('amount2')>0){
+							 $('#amount2').val((m+' ').split('.')[0].replace(' ',''));
+							 $("#amount2").parent().addClass("cknow");
+							  $('#money').val($('#amount2').val());
+						   }else{
+							   if(this.value==(m+' ').split('.')[0].replace(' ','')){
+								 this.checked=true;
+								$('#money').val(this.value);
+								  $(this.parentNode).addClass("cknow");
+							 }else{
+								this.checked=false;
+								$(this.parentNode).removeClass("cknow");
+							 }
+						   }
+					   }
+	              });
+			}else{
+					if(this.value!=mr_typ){
+					if(this.value==2)$("#moneys").html(money_html2);
+					if(this.value==4)$("#moneys").html(money_html4);
+					if(this.value==5)$("#moneys").html(money_html5);
+									$('#money').val('');
+			       $("input[name='amount1']").each(function(){
+					   if(typ==2){
+							if(($('#moneys').html()+' ').indexOf('amount2')>0){
+							 $('#amount2').val((m+' ').split('.')[0].replace(' ',''));
+							 $("#amount2").parent().addClass("cknow");
+							  $('#money').val($('#amount2').val());
+						   }else{
+							   if(this.value==(m+' ').split('.')[0].replace(' ','')){
+								 this.checked=true;
+								$('#money').val(this.value);
+								  $(this.parentNode).addClass("cknow");
+							 }else{
+								this.checked=false;
+								$(this.parentNode).removeClass("cknow");
+							 }
+						   }
+					   }
+					   if(typ==4){
+						  if(($('#moneys').html()+' ').indexOf('amount2')>0){
+							 $('#amount2').val((m+' ').split('.')[0].replace(' ',''));
+							 $("#amount2").parent().addClass("cknow");
+							  $('#money').val($('#amount2').val());
+						   }else{
+							   if(this.value==(m+' ').split('.')[0].replace(' ','')){
+								 this.checked=true;
+								$('#money').val(this.value);
+								  $(this.parentNode).addClass("cknow");
+							 }else{
+								this.checked=false;
+								$(this.parentNode).removeClass("cknow");
+							 }
+					     }
+					   }
+					   if(typ==5){
+							 if(($('#moneys').html()+' ').indexOf('amount2')>0){
+							 $('#amount2').val((m+' ').split('.')[0].replace(' ',''));
+							 $("#amount2").parent().addClass("cknow");
+							  $('#money').val($('#amount2').val());
+						   }else{
+							   if(this.value==(m+' ').split('.')[0].replace(' ','')){
+								 this.checked=true;
+								$('#money').val(this.value);
+								  $(this.parentNode).addClass("cknow");
+							 }else{
+								this.checked=false;
+								$(this.parentNode).removeClass("cknow");
+							 }
+						   }
+					   }
+	              });
+					}
+				}
+
+		 }
+		 mr_typ=this.value;
+		$('#submit').val(this.parentNode.innerText);
+		$(this.parentNode).addClass("cknow");
+		}else{
+		$(this.parentNode).removeClass("cknow");
+		}
+	});
+});
+
+});
+</script>
+</body>
+</html>

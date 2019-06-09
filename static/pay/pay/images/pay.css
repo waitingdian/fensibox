@@ -1,0 +1,89 @@
+.button{
+	border-radius: 200px;
+	background-color: #1B9AF7;
+    border-color: #1B9AF7;
+    color: #FFF;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 40px;
+    margin: 0;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    box-sizing: border-box;
+    transition-property: all;
+    transition-duration: .3s;
+}
+.paytyp{
+float:left;
+margin:5px 5px 0px 0px ;
+width:105px;
+border:1px solid #80C5FF;
+background-image:url(paylogo.png);
+color: #0061F3;
+font-size: 13px;
+height:18px;
+padding: 6px;
+margin-left:0px;
+padding-left: 10px;
+padding-right: 10px;
+}
+.paytyp:hover{
+border:1px solid #da1f33;
+}
+.alipay{
+	background-position:0px 0px;
+}
+.tenpay{
+	background-position:0px -30px;
+}
+.mqqpay{
+	background-position:0px -60px;
+}
+.wxpay{
+	background-position:0px -90px;
+}
+.paybox{
+	margin: 0 auto;
+    border: 1px solid #C8D6FD;
+    background: #fff;
+    padding: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+.moneyfl{
+float:left;
+margin:4px 4px 0px 0px ;
+width:65px;
+border:1px solid #80C5FF;
+background-image:url(paylogo.png);
+background-position:0px -30px;
+color: #000000;
+font-size: 13px;
+padding: 6px;
+height:18px;
+margin-left:0px;
+padding-left: 3px;
+padding-right: 3px;
+line-height:18px;
+text-align: left;
+}
+.moneyfl input{
+line-height:18px;
+height:18px;
+margin:0px;
+width:15px;
+text-align:left;
+}
+.moneyfl:hover{
+border:1px solid #da1f33;
+}
+.cknow{
+	border:1px solid #da1f33;
+}
