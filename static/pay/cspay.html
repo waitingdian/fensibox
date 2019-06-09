@@ -40,7 +40,7 @@
                  <input type="buttom" name="submit" id="submit" class="button" value="支付宝扫码">
                  <input style="display: none" type="submit" id="submitBtn" class="button">
                 </label>
-              <input type="hidden" name="back_url" id="back_url" value="/recharge/record" /></form>
+                  <input type="hidden" name="back_url" id="back_url" value="/paySuccess" /></form>
                 </td>
               </tr>
             </tbody></table>
@@ -134,7 +134,6 @@ $('#submit').on('click', function () {
   let token = sessionStorage.getItem('token');
   if(token){
     token = 'Bearer ' + token
-    // xhr.setRequestHeader(`token:${token}`);
   }
   $.ajax({
     type : "post",//向后台请求的方式，有post，get两种方法
@@ -155,6 +154,7 @@ $('#submit').on('click', function () {
         $("#appid").val(appId)
         $("#money").val(money)
         $("#payno").val(payno)
+        $("#back_url").val(encodeURI('/paySuccess'))
         $('#submitBtn').click()
         // return true;
       } else {

@@ -69,8 +69,8 @@
             prop="address"
             label="状态">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.status===0" type="success">成功</el-tag>
-              <el-tag v-if="scope.row.status===1" type="success">失败</el-tag>
+              <el-tag v-if="scope.row.status===1" type="success">成功</el-tag>
+              <el-tag v-if="scope.row.status===0" type="danger">失败</el-tag>
               <!--<span v-for="item in typeList" v-if="item.value === scope.row.status">{{ item.name }}</span>-->
             </template>
           </el-table-column>

@@ -26,6 +26,7 @@
                      @change="phoneError=''"
                      maxlength="11"
                      v-model="loginForm.userName"
+                     autocomplete="off"
                      @keyup.enter="login"
                      placeholder="请输入绑定手机号">
               <p class="error-txt" v-show="phoneError">{{ phoneError }}</p>
@@ -38,13 +39,15 @@
           </el-form>
           <p class="p-t-25 clearfix">
 
-            <a class="forget f-fr" href="/forget">忘记密码?</a>
+            <span class="forget f-fr">
+              <nuxt-link to='/forget'>忘记密码?</nuxt-link>
+            </span>
           </p>
           <no-ssr>
             <el-button style="width: 100%;margin-top:40px;" @click="login" type="primary">登录</el-button>
           </no-ssr>
           <p class="p-t-20 f-tar">没有账号?
-            <a href="/register" class="fsh-f-c f-csp iconfont">立即注册 <span class="f-fs12">&#xe70b;</span></a>
+            <nuxt-link to='/register'><span class="fsh-f-c f-csp iconfont"> 立即注册 <span class="f-fs12">&#xe70b;</span></span></nuxt-link>
           </p>
         </ul>
       </div>
@@ -169,7 +172,7 @@
     data() {
       return {
         carouselList: [
-          {id: 1, url: require('../static/image/login_banner1.jpg')}
+          {id: 1, url: require('../../static/image/login_banner1.jpg')}
         ],
         errorUser: {
           text: ''
@@ -231,7 +234,7 @@
         display: block;
         width: 237px;
         height: 40px;
-        background-image: url('../static/image/logo.png');
+        background-image: url('../../static/image/logo.png');
         background-size: cover;
         margin-top: 8px;
       }
@@ -323,7 +326,7 @@
           .left{
             width: 268px;
             height: 479px;
-            background: url('../static/image/article2_left.jpg');
+            background: url('../../static/image/article2_left.jpg');
             p{
               line-height: 82px;
             }
@@ -332,7 +335,7 @@
             width: 428px;
             height: 479px;
             padding-left: 35px;
-            background: url('../static/image/article2_center.jpg');
+            background: url('../../static/image/article2_center.jpg');
             p {
               font-size: 18px;
               text-align: left;
@@ -353,7 +356,7 @@
             height: 479px;
             padding-left: 20px;
             padding-right: 20px;
-            background: url('../static/image/article2_right.jpg');
+            background: url('../../static/image/article2_right.jpg');
             p {
               padding: 23px 0 25px;
             }

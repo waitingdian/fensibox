@@ -6,14 +6,12 @@ let commonJS = {
     if (!sessionStorage.length) {
       localStorage.setItem('getSession', Date.now());
     };
-
     // 该事件是核心
     window.addEventListener('storage', function(event) {
       //已有窗口
       if (event.key == 'getSession') {
         localStorage.setItem('setSession', JSON.stringify(sessionStorage));
         localStorage.removeItem('setSession');
-
       }
       //新开窗口
       else if(event.key == 'setSession' && !sessionStorage.length) {

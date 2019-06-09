@@ -21,7 +21,11 @@
           <i class="iconfont f-vam f-csp" style="font-size: 36px">&#xe648;</i>
         </div>
       </div>
-      <h1><i class="logo f-vam"></i> 上热门 <i class="iconfont">&#xe630;</i> 就用<span class="f-fwb">粉丝盒</span> </h1>
+      <h1>
+        <div class="f-csp" style="width: 300px" @click="gohome">
+          <i class="logo f-vam"></i> 上热门 <i class="iconfont">&#xe630;</i> 就用<span class="f-fwb">粉丝盒</span>
+        </div>
+      </h1>
     </div>
   </div>
 </template>
@@ -58,6 +62,9 @@
       },
       goRecharge () {
         location.href = "/recharge"
+      },
+      gohome () {
+        location.href = "/home"
       }
     },
     mounted () {

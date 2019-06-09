@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="register">
     <nav>
       <div class="container-1200">
         <i class="logo"></i>
@@ -46,18 +46,20 @@
           </li>
           <li>
             <span class="f-fs16 label">密码</span>
-            <input type="password" @change="passwordError1 = ''" maxlength="16" v-model="registerForm.password" placeholder="请输入登录密码">
+            <input type="password" autocomplete="new-password"  @change="passwordError1 = ''" maxlength="16" v-model="registerForm.password" placeholder="请输入登录密码">
             <p class="error-txt" v-show="passwordError1">{{ passwordError1 }}</p>
           </li>
           <li>
             <span class="f-fs16 label">确认密码</span>
-            <input type="password" @change="passwordError2 = ''" maxlength="16" v-model="registerForm.password2" placeholder="请再输一次">
+            <input type="password" autocomplete="new-password"  @change="passwordError2 = ''" maxlength="16" v-model="registerForm.password2" placeholder="请再输一次">
             <p class="error-txt" v-show="passwordError2">{{ passwordError2 }}</p>
           </li>
           <no-ssr>
             <el-button style="width: 100%;margin-top:40px;" @click="register" type="primary">注册</el-button>
           </no-ssr>
-          <p class="p-t-20 f-tar">已有账号? <a class="fsh-f-c f-csp iconfont" href="/login">点击登录&#xe70b;</a></p>
+          <p class="p-t-20 f-tar">已有账号?
+            <nuxt-link to='/login'><span class="fsh-f-c f-csp iconfont">点击登录&#xe70b;</span></nuxt-link>
+          </p>
         </ul>
       </div>
       <article class="article1 f-tac p-t-60 p-b-70">
@@ -293,7 +295,7 @@
   }
 </script>
 <style lang="less">
-  .login{
+  .register{
     nav{
       height: 60px;
       background-color: #fff;

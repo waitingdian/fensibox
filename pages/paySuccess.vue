@@ -4,7 +4,7 @@
     <div class="content p-l-35">
       <p class="p-t-25 f-fwb p-b-10">充值成功 <i class="el-icon-arrow-right"></i></p>
       <div class="wrap">
-        <el-button class="m-r-10" @click="goRecord">充值完成</el-button>
+        <el-button class="m-r-10" type="primary"  @click="goRecord">充值完成</el-button>
         <span class="f-csp ewm-container" @mouseenter="showEwm = true" @mouseleave="showEwm = false">充值遇到问题?
           <div class="ewm" v-show="showEwm">
             <img src="~/static/image/weixin.jpg" alt="微信客服">

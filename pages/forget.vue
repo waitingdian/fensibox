@@ -16,38 +16,40 @@
           </el-carousel>
         </no-ssr>
       </div>
-      <div class="register-container" v-loading="loading">
+      <div class="forget-container" v-loading="loading">
         <h2 class="f-tac fsh-f-222 f-fs32 f-fwb">忘记密码</h2>
         <ul v-loading="loading">
           <li>
             <span class="f-fs16 label">手机号</span>
-            <input type="text" @change="phoneError = ''" maxlength="11" v-model="registerForm.phone" placeholder="请输入手机号">
+            <input type="text" @change="phoneError = ''" maxlength="11" v-model="forgetForm.phone" placeholder="请输入手机号">
             <p class="error-txt" v-show="phoneError">{{ phoneError }}</p>
           </li>
           <li>
             <span class="f-fs16 label">验证码</span>
             <input style="width: 180px"
                    @change="veriError = ''"
-                   v-model="registerForm.verification_code"
+                   v-model="forgetForm.verification_code"
                    maxlength="6"
                    placeholder="请输入验证码">
-            <ActhCodeBtn ref="passwordAuthBtn" :phone="registerForm.phone" @click="getVerCode"></ActhCodeBtn>
+            <ActhCodeBtn ref="passwordAuthBtn" :phone="forgetForm.phone" @click="getVerCode"></ActhCodeBtn>
             <p class="error-txt" v-show="veriError">{{ veriError }}</p>
           </li>
           <li>
             <span class="f-fs16 label">密码</span>
-            <input type="password" autocomplete="new-password" @change="passwordError1 = ''" maxlength="16" v-model="registerForm.password" placeholder="请输入登录密码">
+            <input type="password" autocomplete="new-password" @change="passwordError1 = ''" maxlength="16" v-model="forgetForm.password" placeholder="请输入登录密码">
             <p class="error-txt" v-show="passwordError1">{{ passwordError1 }}</p>
           </li>
           <li>
             <span class="f-fs16 label">确认密码</span>
-            <input type="password" autocomplete="new-password" @change="passwordError2 = ''" maxlength="16" v-model="registerForm.password2" placeholder="请再输一次">
+            <input type="password" autocomplete="new-password" @change="passwordError2 = ''" maxlength="16" v-model="forgetForm.password2" placeholder="请再输一次">
             <p class="error-txt" v-show="passwordError2">{{ passwordError2 }}</p>
           </li>
           <no-ssr>
             <el-button style="width: 100%;margin-top:40px;" @click="editPwd" type="primary">保存</el-button>
           </no-ssr>
-          <p class="p-t-20 f-tar"><a class="fsh-f-c f-csp iconfont" href="/login">立即登录 <span class="f-fs12">&#xe70b;</span> </a></p>
+          <p class="p-t-20 f-tar f-csp iconfont">
+            <nuxt-link to='/login' class="fsh-f-c">立即登录 <span class="f-fs12">&#xe70b;</span></nuxt-link>
+          </p>
         </ul>
       </div>
       <article class="article1 f-tac p-t-60 p-b-70">
@@ -167,7 +169,7 @@
     layout (context) {
       return 'homepage'
     },
-    name: 'register',
+    name: 'forget',
     components: {
       Nav,
       ActhCodeBtn
@@ -178,7 +180,7 @@
           {id: 1, url: require('../static/image/login_banner1.jpg')}
         ],
         showEwm: false,
-        registerForm: {},
+        forgetForm: {},
         loading: false,
         text: '获取验证码',
         userInviteCode: '',
@@ -190,7 +192,7 @@
     },
     methods: {
       getVerCode () {
-        this.$axios.$get(`${this.$store.state.baseUrl}sms/send?phone=${this.registerForm.phone}`).then((res) => {
+        this.$axios.$get(`${this.$store.state.baseUrl}sms/send?phone=${this.forgetForm.phone}`).then((res) => {
           if (res.code == '200') {
             this.$message.success("发送成功,请注意查收")
           } else {
@@ -199,42 +201,42 @@
         })
       },
       editPwd () {
-        if (!this.registerForm.phone) {
+        if (!this.forgetForm.phone) {
           this.phoneError = '手机号不能为空'
           return false
         }
-        if (this.registerForm.phone.length != 11) {
+        if (this.forgetForm.phone.length != 11) {
           this.phoneError = '请输入11位手机号'
           return false
         }
-        if (!this.registerForm.verification_code) {
+        if (!this.forgetForm.verification_code) {
           this.veriError = '请输入验证码'
           return false
         }
-        if (this.registerForm.verification_code.length < 6) {
+        if (this.forgetForm.verification_code.length < 6) {
           this.veriError = '请输入6位验证码'
           return false
         }
-        if (!this.registerForm.password) {
+        if (!this.forgetForm.password) {
           this.passwordError1 = '密码不能为空'
           return false
         }
-        if (this.registerForm.password.length < 6) {
+        if (this.forgetForm.password.length < 6) {
           this.passwordError1 = '请输入6-16位密码'
           return false
         }
-        if (!this.registerForm.password2) {
+        if (!this.forgetForm.password2) {
           this.passwordError2 = '请再输一次'
           return false
         }
-        if (this.registerForm.password != this.registerForm.password2) {
+        if (this.forgetForm.password != this.forgetForm.password2) {
           this.passwordError2 = '两次输入密码不一致'
           return false
         }
         let params = {
-          phone: this.registerForm.phone,
-          new_password: this.registerForm.password,
-          verification_code: this.registerForm.verification_code,
+          phone: this.forgetForm.phone,
+          new_password: this.forgetForm.password,
+          verification_code: this.forgetForm.verification_code,
         }
         this.loading = true
         this.$axios.$post(`${this.$store.state.baseUrl}user/editPwd`, params).then((res) => {
@@ -273,7 +275,7 @@
       }
     }
     section{
-      .register-container{
+      .forget-container{
         position: absolute;
         z-index: 2;
         top: 20px;

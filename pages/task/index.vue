@@ -5,7 +5,7 @@
       <div>
         <div class="left f-pr">
           <no-ssr>
-            <el-form ref="form" :inline="true" :model="form" label-width="80px">
+            <el-form ref="form" :inline="true" :model="form" label-width="100px">
               <p class="p-t-25 f-fwb p-b-10">选择平台 <i class="el-icon-arrow-right"></i></p>
               <el-form-item label="选择平台">
                 <el-select v-model="form.platform" @change="choosePlatform" placeholder="请选择平台">
@@ -29,13 +29,13 @@
           <p class="p-l-35" style="line-height: 3">可用积分: {{ userInfo.credit }}积分</p>
         </div>
       </div>
-      <div class="p-t-30 p-l-15">
+      <div class="p-t-30">
         <!--左下-->
         <div class="bot-left f-pr">
           <p class="f-fs18 p-b-20">商品信息</p>
-          <p class="p-b-15">商品编号: {{ detailInfo.gid }}</p>
-          <p class="p-b-15">单价: {{ detailInfo.price }}积分</p>
-          <p class="p-b-15">会员单价: {{ detailInfo.member_price }}积分</p>
+          <p class="p-b-15 p-l-35">商品编号: {{ detailInfo.gid }}</p>
+          <p class="p-b-15 p-l-35">单价: {{ detailInfo.price }}积分</p>
+          <p class="p-b-15 p-l-35">会员单价: {{ detailInfo.member_price }}积分</p>
         </div>
         <!--右下-->
         <div class="bot-right p-l-40">
@@ -43,7 +43,7 @@
           <no-ssr>
             <el-form ref="orderForm"
                      :model="orderForm"
-                     label-width="110px"
+                     label-width="100px"
                      v-loading="loading"
                      size="mini">
               <el-form-item v-for="(item,index) in orderForm.labels"
