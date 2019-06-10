@@ -1,7 +1,7 @@
 <template>
   <div class="order">
     <Nav :navs="navs"></Nav>
-    <div class="content">
+    <div class="content p-r-30">
       <p class="p-t-25 f-fwb p-b-10">选择订单 <i class="el-icon-arrow-right"></i></p>
       <no-ssr>
         <el-form :inline="true" :model="searchForm" label-width="80px">
@@ -73,6 +73,7 @@
             label="退单数量">
           </el-table-column>
           <el-table-column
+            width="170px"
             prop="orderPrice"
             label="下单金额">
           </el-table-column>
@@ -82,7 +83,6 @@
             width="160">
           </el-table-column>
           <el-table-column
-            fixed="right"
             label="操作">
             <template slot-scope="scope">
               <el-button type="text" @click="goDetail(scope.row.id)">查看</el-button>

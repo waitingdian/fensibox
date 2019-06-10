@@ -187,8 +187,14 @@
         this.$axios.$post(`${this.$store.state.baseUrl}order/add`, params).then((res) => {
           this.loading = false
           if (res.code == 200) {
-            location.href='/order'
-            // this.$router.push('/order')
+            this.$confirm('下单成功', '温馨提示', {
+              confirmButtonText: '前往订单列表',
+              cancelButtonText: '继续下单',
+              type: 'success'
+            }).then(() => {
+              location.href = '/order'
+            }).catch(() => {
+            });
           } else {
             this.$message.error(res.msg)
           }

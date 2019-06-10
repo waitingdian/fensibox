@@ -37,7 +37,7 @@
 				<input name="money" type="hidden" id="money" value="">
 				<input name="typ" type="hidden" id="typ" value="">
                 <label>
-                 <input type="buttom" name="submit" id="submit" class="button" value="支付宝扫码">
+                 <input type="buttom" id="submit" class="button" value="支付宝扫码">
                  <input style="display: none" type="submit" id="submitBtn" class="button">
                 </label>
                   <input type="hidden" name="back_url" id="back_url" value="/paySuccess" /></form>
@@ -154,7 +154,7 @@ $('#submit').on('click', function () {
         $("#appid").val(appId)
         $("#money").val(money)
         $("#payno").val(payno)
-        $("#back_url").val(encodeURI('/paySuccess'))
+        $("#back_url").val(encodeURIComponent('/paysuccess'))
         $('#submitBtn').click()
         // return true;
       } else {

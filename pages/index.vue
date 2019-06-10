@@ -12,7 +12,7 @@ export default {
   components: {
   },
   beforeCreate () {
-    // this.$router.push('/login')
+    this.$router.push('/login')
   },
   mounted () {
 
