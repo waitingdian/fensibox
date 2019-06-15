@@ -49,7 +49,7 @@
             <el-button style="width: 100%;margin-top:40px;" @click="editPwd" type="primary">保存</el-button>
           </no-ssr>
           <p class="p-t-20 f-tar f-csp iconfont">
-            <nuxt-link to='/login' class="fsh-f-c">立即登录 <span class="f-fs12">&#xe70b;</span></nuxt-link>
+            <nuxt-link :to="`/login${queryString}`" class="fsh-f-c">立即登录 <span class="f-fs12">&#xe70b;</span></nuxt-link>
           </p>
         </ul>
       </div>
@@ -269,6 +269,15 @@
       }
     },
     mounted () {
+    },
+    computed: {
+      queryString () {
+        let str = ''
+        if (this.$route.query.user_invite_code) {
+          str = `?user_invite_code=${this.$route.query.user_invite_code}`
+        }
+        return str
+      }
     }
   }
 </script>

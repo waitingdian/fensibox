@@ -41,14 +41,14 @@
           <p class="p-t-25 clearfix">
 
             <span class="forget f-fr">
-              <nuxt-link to='/forget'>忘记密码?</nuxt-link>
+              <nuxt-link :to="`/forget${queryString}`">忘记密码?</nuxt-link>
             </span>
           </p>
           <no-ssr>
             <el-button style="width: 100%;margin-top:40px;" @click="login" type="primary">登录</el-button>
           </no-ssr>
           <p class="p-t-20 f-tar">没有账号?
-            <nuxt-link to='/register'><span class="fsh-f-c f-csp iconfont"> 立即注册 <span class="f-fs12">&#xe70b;</span></span></nuxt-link>
+            <nuxt-link :to="`/register${queryString}`"><span class="fsh-f-c f-csp iconfont"> 立即注册 <span class="f-fs12">&#xe70b;</span></span></nuxt-link>
           </p>
         </ul>
       </div>
@@ -226,6 +226,15 @@
       }
     },
     mounted () {
+    },
+    computed: {
+      queryString () {
+        let str = ''
+        if (this.$route.query.user_invite_code) {
+          str = `?user_invite_code=${this.$route.query.user_invite_code}`
+        }
+        return str
+      }
     }
   }
 </script>

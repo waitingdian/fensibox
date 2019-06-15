@@ -59,7 +59,7 @@
             <el-button style="width: 100%;margin-top:40px;" @click="register" type="primary">注册</el-button>
           </no-ssr>
           <p class="p-t-20 f-tar">已有账号?
-            <nuxt-link to='/login'><span class="fsh-f-c f-csp iconfont">点击登录&#xe70b;</span></nuxt-link>
+            <nuxt-link :to="`/login${queryString}`"><span class="fsh-f-c f-csp iconfont">点击登录&#xe70b;</span></nuxt-link>
           </p>
         </ul>
       </div>
@@ -294,6 +294,15 @@
     },
     mounted () {
       this.userInviteCode = this.$route.query.user_invite_code
+    },
+    computed: {
+      queryString () {
+        let str = ''
+        if (this.$route.query.user_invite_code) {
+          str = `?user_invite_code=${this.$route.query.user_invite_code}`
+        }
+        return str
+      }
     }
   }
 </script>

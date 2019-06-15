@@ -357,18 +357,73 @@
         }).then(() => {
           this.addOrder(params)
         })
+      },
+      operation(a, b, digits, op) {
+        var o1 = toInteger(a)
+        var o2 = toInteger(b)
+        var n1 = o1.num
+        var n2 = o2.num
+        var t1 = o1.times
+        var t2 = o2.times
+        var max = t1 > t2 ? t1 : t2
+        var result = null
+        switch (op) {
+          case 'add':
+            if (t1 === t2) { // 两个小数位数相同
+              result = n1 + n2
+            } else if (t1 > t2) { // o1 小数位 大于 o2
+              result = n1 + n2 * (t1 / t2)
+            } else { // o1 小数位 小于 o2
+              result = n1 * (t2 / t1) + n2
+            }
+            return result / max
+          case 'subtract':
+            if (t1 === t2) {
+              result = n1 - n2
+            } else if (t1 > t2) {
+              result = n1 - n2 * (t1 / t2)
+            } else {
+              result = n1 * (t2 / t1) - n2
+            }
+            return result / max
+          case 'multiply':
+            result = (n1 * n2) / (t1 * t2)
+            return result
+          case 'divide':
+            result = (n1 / n2) * (t2 / t1)
+            return result
+        }
       }
-    },
+      },
     mounted () {
       this.getProductList()
       this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
     },
     computed: {
       totalPrice (){
-        return (this.orderForm.count * (this.detailInfo.price*1000000))/1000000
+        let price = 0
+        if (this.detailInfo && this.detailInfo.price) {
+          var dotPos = this.detailInfo.price.indexOf('.')
+          var len = this.detailInfo.price.substr(dotPos+1).length
+          len = len
+          var times  = Math.pow(10, len)
+          price = (this.orderForm.count * (this.detailInfo.price * times))/times
+          price = price.toFixed(5)
+        }
+        return price
       },
       vipTotalPrice (){
-        return (this.orderForm.count * (this.detailInfo.member_price*1000000))/1000000
+        let price = 0
+        if (this.detailInfo && this.detailInfo.member_price) {
+          var dotPos = this.detailInfo.member_price.indexOf('.')
+          var len = this.detailInfo.member_price.substr(dotPos+1).length
+          len = len
+          var times  = Math.pow(10, len)
+          price = (this.orderForm.count * (this.detailInfo.member_price * times))/times
+          price = price.toFixed(5)
+        }
+        return price
+        // return ((this.orderForm.count * this.detailInfo.member_price)*1000000)/1000000
       }
     }
   }
