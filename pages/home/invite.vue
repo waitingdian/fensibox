@@ -70,7 +70,7 @@
         tableData: [],
         pageInfo: {
           current: 0,
-          pageSize: 20,
+          pageSize: 10,
           total: 0
         },
         userInfo: {}

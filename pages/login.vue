@@ -9,9 +9,10 @@
     <section class="f-pr">
       <div class="banner">
         <no-ssr>
-          <el-carousel height="440px" trigger="click">
+          <el-carousel height="400px" trigger="click">
             <el-carousel-item v-for="item in carouselList" :key="item.id">
-              <img :src="item.url" alt="">
+              <div style="width: 100%;height: 100%;background-size: cover; background-position: center center;" :style="{'background-image':`url(${item.url})`}"></div>
+              <!--<img :src="item.url" alt="">-->
             </el-carousel-item>
           </el-carousel>
         </no-ssr>
@@ -157,7 +158,7 @@
           </div>
         </span>
       </div>
-      <p class="p-t-30">人气大师任务平台 备案号: ICP:</p>
+      <p class="p-t-30">人气大师任务平台 备案号: 豫ICP备19017313号</p>
     </footer>
   </div>
 </template>
@@ -172,7 +173,8 @@
     data() {
       return {
         carouselList: [
-          {id: 1, url: require('../../static/image/login_banner1.jpg')}
+          {id: 1, url: require('../static/image/login_banner1.jpg')},
+          {id: 2, url: require('../static/image/login_banner2.png')}
         ],
         errorUser: {
           text: ''
@@ -210,12 +212,16 @@
           this.passError = '请输入6-16位密码'
           return false
         }
+        this.loading = true
         this.$axios.$post(`${this.$store.state.baseUrl}login `,this.getParams()).then((res) => {
+          this.loading = false
           if (res.code == 200) {
             location.replace('/home')
           } else {
             this.$message.error(res.msg)
           }
+        }).catch(() => {
+          this.loading = false
         })
       }
     },
@@ -225,6 +231,11 @@
 </script>
 <style lang="less">
   .login{
+    .el-carousel__item{
+      img{
+        height: 100%;
+      }
+    }
     nav{
       height: 60px;
       background-color: #fff;
@@ -234,7 +245,7 @@
         display: block;
         width: 237px;
         height: 40px;
-        background-image: url('../../static/image/logo.png');
+        background-image: url('../static/image/logo.png');
         background-size: cover;
         margin-top: 8px;
       }
@@ -326,7 +337,7 @@
           .left{
             width: 268px;
             height: 479px;
-            background: url('../../static/image/article2_left.jpg');
+            background: url('../static/image/article2_left.jpg');
             p{
               line-height: 82px;
             }
@@ -335,7 +346,7 @@
             width: 428px;
             height: 479px;
             padding-left: 35px;
-            background: url('../../static/image/article2_center.jpg');
+            background: url('../static/image/article2_center.jpg');
             p {
               font-size: 18px;
               text-align: left;
@@ -356,7 +367,7 @@
             height: 479px;
             padding-left: 20px;
             padding-right: 20px;
-            background: url('../../static/image/article2_right.jpg');
+            background: url('../static/image/article2_right.jpg');
             p {
               padding: 23px 0 25px;
             }

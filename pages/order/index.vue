@@ -31,7 +31,8 @@
             </el-select>
           </el-form-item>
           <el-form-item class="f-fr p-r-50">
-            <el-button type="primary" @click="getOrderList">查询</el-button>
+            <el-button type="primary" @click="orderSync" :disabled="loading">同步订单</el-button>
+            <el-button type="primary" @click="getOrderList" :disabled="loading">查询</el-button>
           </el-form-item>
         </el-form>
         <el-table
@@ -93,7 +94,7 @@
           <el-pagination
             class="f-tac p-t-25 p-b-20"
             background
-            layout="prev, pager, next"
+            layout="total, prev, pager, next"
             :total="pageInfo.total"
             :page-size="pageInfo.pageSize"
             @current-change = "handleCurrentChange">
@@ -126,7 +127,9 @@
           {name: '有异常',value: 3},
           {name: '补单中',value: 4},
           {name: '已更新',value: 5},
-          {name: '已完成',value: 90}
+          {name: '已完成',value: 90},
+          {name: '已退单',value: 91},
+          {name: '已退款',value: 92}
         ],
         searchForm: {
           status: '',
@@ -136,7 +139,7 @@
         tableData: [],
         pageInfo: {
           current: 0,
-          pageSize: 20,
+          pageSize: 10,
           total: 0
         }
       }
@@ -165,7 +168,20 @@
           this.loading = false
           if (res.code == 200) {
             this.tableData = res.data.items || []
-            this.pageInfo.total = res.data.page.cur_page
+            this.pageInfo.total = res.data.page.total_row
+          } else {
+            this.$message.error(res.msg)
+          }
+        }).catch(() => {
+          this.loading = false
+        })
+      },
+      orderSync () {
+        this.loading = true
+        this.$axios.$post(`${this.$store.state.baseUrl}/order/sync`).then((res) => {
+          this.loading = false
+          if (res.code == 200) {
+            this.$message.success("同步成功")
           } else {
             this.$message.error(res.msg)
           }

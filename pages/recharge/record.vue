@@ -39,7 +39,7 @@
             </el-select>
           </el-form-item>
           <el-form-item class="f-fr p-r-50">
-            <el-button type="primary" @click="getList">查询</el-button>
+            <el-button type="primary" @click="getList" :disabled="loading">查询</el-button>
           </el-form-item>
         </el-form>
         <el-table
@@ -89,7 +89,7 @@
           <el-pagination
             class="f-tac p-t-25 p-b-20"
             background
-            layout="prev, pager, next"
+            layout="total, prev, pager, next"
             :total="pageInfo.total"
             :page-size="pageInfo.pageSize"
             @current-change = "handleCurrentChange">
@@ -128,14 +128,14 @@
         tableData: [],
         pageInfo: {
           current: 0,
-          pageSize: 20,
+          pageSize: 10,
           total: 0
         },
         loading: false
       }
     },
     methods: {
-      handleCurrentChange () {
+      handleCurrentChange (val) {
         this.pageInfo.current = val
         this.getList()
       },
@@ -154,7 +154,7 @@
           this.loading = false
           if (res.code == 200) {
             this.tableData = res.data.items || []
-            this.pageInfo.total = res.data.page.cur_page
+            this.pageInfo.total = res.data.page.total_row
           } else {
             this.$message.error(res.msg)
           }

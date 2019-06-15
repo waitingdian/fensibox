@@ -6,8 +6,8 @@
         <div class="left f-pr">
           <no-ssr>
             <el-form ref="form" :inline="true" :model="form" label-width="100px">
-              <p class="p-t-25 f-fwb p-b-10">选择平台 <i class="el-icon-arrow-right"></i></p>
-              <el-form-item label="选择平台">
+              <p class="p-t-25 f-fwb p-b-50">选择项目 <i class="el-icon-arrow-right"></i></p>
+              <el-form-item label="选择项目" style="padding-top: 30px;">
                 <el-select v-model="form.platform" @change="choosePlatform" placeholder="请选择平台">
                   <el-option v-for="item in productList"
                              :key="item.gid"
@@ -19,21 +19,78 @@
             </el-form>
           </no-ssr>
         </div>
-        <div class="right">
-          <p class="f-fs18 p-b-10">用户信息</p>
-          <p class="p-l-35 p-t-10" style="line-height: 3">用户名: {{ userInfo.username }}</p>
-          <p class="p-l-35" style="line-height: 3">用户等级:
-            <span v-if="userInfo.role == 0">普通用户</span>
-            <span v-if="userInfo.role == 1">会员</span>
-          </p>
-          <p class="p-l-35" style="line-height: 3">可用积分: {{ userInfo.credit }}积分</p>
+        <div class="right p-l-10 p-r-10">
+          <el-form ref="douyinForm"
+                   :model="douyinForm"
+                   label-width="100px"
+                   v-loading="searchLoading"
+                   size="mini">
+            <el-form-item label="抖音视频链接">
+              <el-row>
+                <el-col :span="20">
+                  <el-input v-model="douyinForm.dylink" placeholder="请填写抖音视频链接"></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-button @click="getDyspInfo" type="primary">查询</el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="视频ID">
+              <el-row>
+                <el-col :span="20">
+                  <el-input v-model="douyinForm.dyId" placeholder="抖音视频ID" disabled></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-button @click="copyUrl(douyinForm.dyId)">复制</el-button>
+                </el-col>
+              </el-row>
+              <!--<template>{{ douyinForm.dyId }}</template>-->
+            </el-form-item>
+            <el-form-item label="快手视频链接">
+              <el-row>
+                <el-col :span="20">
+                  <el-input v-model="douyinForm.kslink" placeholder="请填写快手视频链接"></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-button @click="getKsspInfo" type="primary">查询</el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="快手ID">
+              <el-row>
+                <el-col :span="20">
+                  <el-input v-model="douyinForm.ksId" placeholder="快手视频ID" disabled></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-button @click="copyUrl(douyinForm.ksId)">复制</el-button>
+                </el-col>
+              </el-row>
+              <!--<template>{{ douyinForm.ksId }}</template>-->
+            </el-form-item>
+            <el-form-item label="作品ID">
+              <el-row>
+                <el-col :span="20">
+                  <el-input v-model="douyinForm.ksPro" placeholder="快手作品ID" disabled></el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-button @click="copyUrl(douyinForm.ksPro)">复制</el-button>
+                </el-col>
+              </el-row>
+              <!--<template>{{ douyinForm.ksPro }}</template>-->
+            </el-form-item>
+          </el-form>
         </div>
       </div>
       <div class="p-t-30">
         <!--左下-->
         <div class="bot-left f-pr">
-          <p class="f-fs18 p-b-20">商品信息</p>
-          <p class="p-b-15 p-l-35">商品编号: {{ detailInfo.gid }}</p>
+          <p class="f-fs18 p-b-15">商品信息</p>
+          <p class="p-l-35 p-b-15">商品编号: {{ detailInfo.gid }}</p>
+          <p class="p-l-35 p-b-15">用户等级:
+            <span v-if="userInfo.role == 0">普通用户</span>
+            <span v-if="userInfo.role == 1">会员</span>
+          </p>
+          <p class="p-l-35 p-b-15">可用积分: {{ userInfo.credit }}积分</p>
           <p class="p-b-15 p-l-35">单价: {{ detailInfo.price }}积分</p>
           <p class="p-b-15 p-l-35">会员单价: {{ detailInfo.member_price }}积分</p>
         </div>
@@ -101,14 +158,56 @@
           count: 0,
           labels: []
         },
+        douyinForm: {
+          dylink: '',
+          dyId: '',
+          kslink: '',
+          ksId: '',
+          ksPro: ''
+        },
         limit: 500,   // 当前页数不分页默认写了500
         detailInfo: {
           labels: []
         },
-        userInfo: {}
+        userInfo: {},
+        searchLoading: false
       }
     },
     methods: {
+      copyUrl (url) {
+        if (!url) {
+          this.$message.error('请先搜索后再复制')
+          return false
+        }
+        var text = url;
+        var textareaEle = document.createElement('input');
+        textareaEle.style.fontSize = '12pt';
+        textareaEle.style.border = '0';
+        textareaEle.style.padding = '0';
+        textareaEle.style.margin = '0';
+        textareaEle.style.position = 'absolute';
+        textareaEle.style['right'] = '-9999px';
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        textareaEle.style.top = yPosition + 'px';
+        textareaEle.setAttribute('readonly', '');
+        textareaEle.value = text;
+        document.body.appendChild(textareaEle);
+        textareaEle.select();
+        textareaEle.setSelectionRange(0, textareaEle.value.length);
+        var succeeded = document.execCommand('copy');
+        if (succeeded) {
+          this.$message({
+            type: 'success',
+            message: '复制成功!'
+          });
+        } else {
+          this.$message({
+            type: 'info',
+            message: '复制失败，请手动输入以上网址'
+          });
+        }
+        document.body.removeChild(textareaEle);
+      },
       changeCount(value) {
         if (value < this.orderForm.limitMin) {
           this.$message.error(`下单数量无效,不能小于${this.orderForm.limitMin}`)
@@ -202,11 +301,50 @@
           this.loading = false
         })
       },
+      getDyspInfo () {
+        if(!this.douyinForm.dylink) {
+          this.$message.error("请输入抖音链接后查询")
+          return false
+        }
+        this.searchLoading = true
+        this.$axios.$get(`${this.$store.state.baseUrl}product/getDyspInfo?url=${this.douyinForm.dylink}`).then((res) => {
+          this.searchLoading = false
+          if (res.code == 200) {
+            this.douyinForm.dyId = res.data.dyId
+          } else {
+            this.$message.error(res.msg)
+          }
+        }).catch(() => {
+          this.searchLoading = false
+        })
+      },
+      getKsspInfo () {
+        if(!this.douyinForm.kslink) {
+          this.$message.error("请输入快手链接后查询")
+          return false
+        }
+        this.searchLoading = true
+        this.$axios.$get(`${this.$store.state.baseUrl}product/getKsspInfo?url=${this.douyinForm.kslink}`).then((res) => {
+          this.searchLoading = false
+          if (res.code == 200) {
+            this.douyinForm.ksId = res.data.videoid
+            this.douyinForm.ksPro = res.data.authorid
+          } else {
+            this.$message.error(res.msg)
+          }
+        }).catch(() => {
+          this.searchLoading = false
+        })
+      },
       confimBox (params) {
+        let str = ''
+        this.orderForm.labels.forEach((item) => {
+          str += `<p class="p-l-15">${item.name}: ${item.value}</p>`
+        })
         let text = this.$createElement('div', {
           domProps: {
             // 商品名称 下单数量 消耗积分 会员消耗积分
-            innerHTML: `<p class="p-l-15">视频ID: ${this.form.platform}</p>
+            innerHTML: `${str}
                         <p class="p-l-15">下单数量: ${this.orderForm.count}</p>
                         <p class="p-l-15">消耗积分: ${this.totalPrice}</p>
                         <p class="p-l-15">会员消耗积分: ${this.vipTotalPrice}</p>`
@@ -245,7 +383,7 @@
         display: flex;
       }
       .left{
-        width: 412px;
+        width: 397px;
         height: 290px;
         border-bottom: 1px dotted #8d8b8c;
       }

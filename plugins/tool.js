@@ -2,10 +2,10 @@ import Vue from 'vue'
 
 let commonJS = {
   install (Vue, option) {
-    // 该事件是核心
-    if (!sessionStorage.length) {
-      localStorage.setItem('getSession', Date.now());
-    };
+    // // 该事件是核心
+    // if (!sessionStorage.length) {
+    //   localStorage.setItem('getSession', Date.now());
+    // };
     // 该事件是核心
     window.addEventListener('storage', function(event) {
       //已有窗口

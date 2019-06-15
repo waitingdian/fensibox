@@ -3,7 +3,8 @@
     <Nav :navs="navs"></Nav>
     <div class="p-t-30 p-l-35">
       <p class="p-b-20">用户名: {{ userInfo.username }}</p>
-      <p class="p-b-50">当前积分: {{ userInfo.credit }}</p>
+      <p class="p-b-10">当前积分: {{ userInfo.credit }}</p>
+      <p class="p-b-30">1元 = <span style="color: #ff0000">100积分</span></p>
     </div>
     <div class="content">
       <iframe src="./pay/cspay.html" style="width: 100%;height: 360px" frameborder="0"></iframe>

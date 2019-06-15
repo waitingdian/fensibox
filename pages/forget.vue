@@ -9,9 +9,10 @@
     <section class="f-pr">
       <div class="banner">
         <no-ssr>
-          <el-carousel height="440px" trigger="click">
+          <el-carousel height="400px" trigger="click">
             <el-carousel-item v-for="item in carouselList" :key="item.id">
-              <img :src="item.url" alt="">
+              <div style="width: 100%;height: 100%;background-size: cover; background-position: center center;" :style="{'background-image':`url(${item.url})`}"></div>
+              <!--<img :src="item.url" alt="">-->
             </el-carousel-item>
           </el-carousel>
         </no-ssr>
@@ -158,7 +159,7 @@
           </div>
         </span>
       </div>
-      <p class="p-t-30">人气大师任务平台 备案号: ICP:</p>
+      <p class="p-t-30">人气大师任务平台 备案号: 豫ICP备19017313号</p>
     </footer>
   </div>
 </template>
@@ -177,7 +178,8 @@
     data() {
       return {
         carouselList: [
-          {id: 1, url: require('../static/image/login_banner1.jpg')}
+          {id: 1, url: require('../static/image/login_banner1.jpg')},
+          {id: 2, url: require('../static/image/login_banner2.png')}
         ],
         showEwm: false,
         forgetForm: {},
@@ -242,16 +244,28 @@
         this.$axios.$post(`${this.$store.state.baseUrl}user/editPwd`, params).then((res) => {
           this.loading = false
           if (res.code ==200) {
-            this.$messge.success('修改成功')
-            setTimeout(() => {
+            this.resetForm()
+            this.$confirm('修改成功, 点击确定跳转至登录页面', '温馨提示', {
+              confirmButtonText: '确定',
+              showCancelButton: false,
+              type: 'success'
+            }).then(() => {
               this.$router.replace('/login')
-            })
+            }).catch(() => {
+            });
           } else {
+            this.loading = false
             this.$message.error(res.msg)
           }
         }).catch(() => {
           this.loading = false
         })
+      },
+      resetForm () {
+        this.forgetForm.phone = ""
+        this.forgetForm.password = ""
+        this.forgetForm.password2 = ""
+        this.forgetForm.verification_code = ""
       }
     },
     mounted () {
