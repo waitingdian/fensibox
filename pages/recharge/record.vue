@@ -127,7 +127,7 @@
         },
         tableData: [],
         pageInfo: {
-          current: 0,
+          current: 1,
           pageSize: 10,
           total: 0
         },
@@ -148,9 +148,9 @@
         if (this.searchForm.periodEnd) {
           periodEnd = this.format(this.searchForm.periodEnd, "yyyy-MM-dd hh:mm:ss")
         }
-        let queryString = `limit=${this.pageInfo.pageSize}&offset=${this.pageInfo.current}&status=${this.searchForm.status}&period_start=${periodStart}&period_end=${periodEnd}`
+        let queryString = `?limit=${this.pageInfo.pageSize}&offset=${this.pageInfo.pageSize*(this.pageInfo.current-1)}&status=${this.searchForm.status}&period_start=${periodStart}&period_end=${periodEnd}`
         this.loading = true
-        this.$axios.$get(`${this.$store.state.baseUrl}deposit/list?${queryString}`).then((res) => {
+        this.$axios.$get(`${this.$store.state.baseUrl}deposit/list${queryString}`).then((res) => {
           this.loading = false
           if (res.code == 200) {
             this.tableData = res.data.items || []

@@ -52,7 +52,7 @@ module.exports = {
   ],
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'prev') ? "" : "http://192.168.24.51:20230/",
+    baseURL: (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'prev') ? "" : "http://47.105.221.99:8081/",
     withCredentials: true,
     proxy: process.env.NODE_ENV !== 'production'
   },

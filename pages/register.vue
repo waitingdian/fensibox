@@ -176,6 +176,7 @@
 <script>
   import Nav from '@/components/Nav'
   import ActhCodeBtn from '@/components/acthCodeBtn'
+  import axios from 'axios'
   export default {
     layout (context) {
       return 'homepage'
@@ -206,13 +207,20 @@
     },
     methods: {
       getVerCode () {
-        this.$axios.$get(`${this.$store.state.baseUrl}sms/send?phone=${this.registerForm.phone}`).then((res) => {
-          if (res.code == '200') {
+        axios.get(`${this.$store.state.axiosBaseUrl}sms/send?phone=${this.registerForm.phone}`).then((res) => {
+          if (res.data.code == '200') {
             this.$message.success("发送成功,请注意查收")
           } else {
-            this.$message.error(res.msg)
+            this.$message.error(res.data.msg)
           }
         })
+        // this.$axios.$get(`${this.$store.state.baseUrl}sms/send?phone=${this.registerForm.phone}`).then((res) => {
+        //   if (res.code == '200') {
+        //     this.$message.success("发送成功,请注意查收")
+        //   } else {
+        //     this.$message.error(res.msg)
+        //   }
+        // })
       },
       register () {
         if (!this.registerForm.invite_code) {
@@ -258,9 +266,9 @@
           verification_code: this.registerForm.verification_code,
           invite_code: this.registerForm.invite_code
         }
-        var reg = new RegExp("^\d$");
-        if (reg.test(this.registerForm.userInviteCode)) {
-          params.user_invite_code = this.registerForm.userInviteCode
+        var reg = /^\d+$/
+        if (reg.test(this.userInviteCode)) {
+          params.user_invite_code = this.userInviteCode
         }
         this.loading = true
         this.$axios.$post(`${this.$store.state.baseUrl}user/register`, params).then((res) => {

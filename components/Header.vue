@@ -10,10 +10,10 @@
           <i class="iconfont f-fs24 f-vam" style="font-size: 24px">&#xe604;</i>
           <span class="f-vam">充值</span>
         </div>
-        <div class="item p-r-25">
-          <i class="iconfont f-vam" style="font-size: 22px">&#xe696;</i>
-          <span class="f-vam">帮助中心</span>
-        </div>
+        <!--<div class="item p-r-25">-->
+          <!--<i class="iconfont f-vam" style="font-size: 22px">&#xe696;</i>-->
+          <!--<span class="f-vam">帮助中心</span>-->
+        <!--</div>-->
         <!--<div class="item p-r-20">-->
           <!--<i class="iconfont f-vam" style="font-size: 44px">&#xe643;</i>-->
         <!--</div>-->

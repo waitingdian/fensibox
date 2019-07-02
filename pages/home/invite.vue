@@ -69,7 +69,7 @@
         show: 'invite',
         tableData: [],
         pageInfo: {
-          current: 0,
+          current: 1,
           pageSize: 10,
           total: 0
         },
@@ -79,11 +79,12 @@
     methods: {
       handleCurrentChange (val) {
         this.pageInfo.current = val
+        this.getInviteList()
       },
       getInviteList () {
         this.loading = true
-        let queryString = `limit=${this.pageInfo.pageSize}&offset=${this.pageInfo.current}`
-        this.$axios.$get(`${this.$store.state.baseUrl}user/inviteList?${queryString}`).then((res) => {
+        let queryString = `?limit=${this.pageInfo.pageSize}&offset=${this.pageInfo.pageSize*(this.pageInfo.current-1)}`
+        this.$axios.$get(`${this.$store.state.baseUrl}user/inviteList${queryString}`).then((res) => {
           this.loading = false
           if (res.code == 200) {
             this.tableData = res.data.items || []
@@ -133,7 +134,7 @@
     },
     computed: {
       inviteLink () {
-        return `http://fensibox.com/login?user_invite_code=${this.userInfo.id}`
+        return `http://fensibox.com/register?user_invite_code=${this.userInfo.id}`
       }
     }
   }

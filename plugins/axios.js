@@ -1,23 +1,14 @@
 import { Message } from 'element-ui';
 export default function ({$axios, redirect}) {
-  // $axios.interceptors.request.use(function (config){
-  //   // 处理请求之前的配置
-  //   // config.timeout = 10 * 1000 //请求响应时间
-  //   // return config;
-  // }, function (error){
-  //   // 请求失败的处理
-  //   return Promise.reject(error);
-  // });
-  $axios.onRequest(config => {
-    let token = sessionStorage.getItem('token');
-      if(token){
-        token = 'Bearer ' + token
-        config.headers["Authorization"] = token;
-      }
-    if (config.method == 'get') {
-
-    }
-  });
+  let token = sessionStorage.getItem('token');
+  if (token) {
+    token = 'Bearer ' + token
+    $axios.defaults.headers.common['Authorization'] = token;
+  } else {
+    // if (location.href.indexOf('login') === -1) {
+    //   location.href = '/login';
+    // }
+  }
 
   $axios.onResponse(function (response) {
     if ((response.config.url.indexOf('/login') != -1) && (response.data.code == 200)) {

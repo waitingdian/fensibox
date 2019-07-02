@@ -166,6 +166,7 @@
 <script>
   import Nav from '@/components/Nav'
   import ActhCodeBtn from '@/components/acthCodeBtn'
+  import axios from 'axios'
   export default {
     layout (context) {
       return 'homepage'
@@ -194,13 +195,20 @@
     },
     methods: {
       getVerCode () {
-        this.$axios.$get(`${this.$store.state.baseUrl}sms/send?phone=${this.forgetForm.phone}`).then((res) => {
-          if (res.code == '200') {
+        axios.get(`${this.$store.state.axiosBaseUrl}sms/send?phone=${this.forgetForm.phone}`).then((res) => {
+          if (res.data.code == '200') {
             this.$message.success("发送成功,请注意查收")
           } else {
-            this.$message.error(res.msg)
+            this.$message.error(res.data.msg)
           }
         })
+        // this.$axios.$get(`${this.$store.state.baseUrl}sms/send?phone=${this.forgetForm.phone}`).then((res) => {
+        //   if (res.code == '200') {
+        //     this.$message.success("发送成功,请注意查收")
+        //   } else {
+        //     this.$message.error(res.msg)
+        //   }
+        // })
       },
       editPwd () {
         if (!this.forgetForm.phone) {

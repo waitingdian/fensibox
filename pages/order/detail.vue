@@ -1,7 +1,7 @@
 <template>
   <div class="order-detail">
     <Nav :navs="navs"></Nav>
-    <div class="content">
+    <div class="content" v-loading="loading">
       <div class="left">
         <p>订单号: {{ detailInfo.oid }}</p>
         <p>下单数量: {{ detailInfo.num }}</p>
