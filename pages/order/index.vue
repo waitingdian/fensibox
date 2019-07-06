@@ -31,8 +31,8 @@
             </el-select>
           </el-form-item>
           <el-form-item class="f-fr p-r-50">
-            <el-button type="primary" @click="orderSync" :disabled="loading">同步订单</el-button>
             <el-button type="primary" @click="getOrderList" :disabled="loading">查询</el-button>
+            <el-button type="primary" @click="orderSync" :disabled="loading">同步订单</el-button>
           </el-form-item>
         </el-form>
         <el-table
@@ -182,6 +182,7 @@
           this.loading = false
           if (res.code == 200) {
             this.$message.success("同步成功")
+            this.getOrderList()
           } else {
             this.$message.error(res.msg)
           }
