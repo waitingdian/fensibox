@@ -20,7 +20,7 @@
       <div class="login-container" v-loading="loading">
         <h2 class="f-tac fsh-f-222 f-fs32 f-fwb">欢迎登陆</h2>
         <ul>
-          <el-form>
+          <el-form @submit.native.prevent>
             <li>
               <span class="f-fs16 label">账号</span>
               <input type="text"

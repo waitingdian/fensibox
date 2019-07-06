@@ -47,7 +47,7 @@
           <div class="p-t-10 p-b-50">
             <el-button type="primary" @click="copyUrl">点击复制</el-button>
           </div>
-          <p>推广10个好友注册充值，即可获得一年<span class="fsh-f-c f-fs16">VIP会员</span>资格</p>
+          <p>推广10个好友注册，即可获得一年<span class="fsh-f-c f-fs16">VIP会员</span>资格</p>
         </div>
       </no-ssr>
     </div>

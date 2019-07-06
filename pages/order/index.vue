@@ -4,7 +4,7 @@
     <div class="content p-r-30">
       <p class="p-t-25 f-fwb p-b-10">选择订单 <i class="el-icon-arrow-right"></i></p>
       <no-ssr>
-        <el-form :inline="true" :model="searchForm" label-width="80px">
+        <el-form :inline="true" @submit.native.prevent :model="searchForm" label-width="80px">
           <el-form-item label="开始日期" label-width="80px">
             <el-date-picker
               v-model="searchForm.periodStart"

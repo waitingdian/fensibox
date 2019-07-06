@@ -5,7 +5,7 @@
       <div>
         <div class="left f-pr">
           <no-ssr>
-            <el-form ref="form" :inline="true" :model="form" label-width="100px">
+            <el-form ref="form" @submit.native.prevent :inline="true" :model="form" label-width="100px">
               <p class="p-t-25 f-fwb p-b-50">选择项目 <i class="el-icon-arrow-right"></i></p>
               <el-form-item label="选择项目" style="padding-top: 30px;">
                 <el-select v-model="form.platform" @change="choosePlatform" placeholder="请选择平台">
@@ -21,6 +21,7 @@
         </div>
         <div class="right p-l-10 p-r-10">
           <el-form ref="douyinForm"
+                   @submit.native.prevent
                    :model="douyinForm"
                    label-width="100px"
                    v-loading="searchLoading"
@@ -98,7 +99,7 @@
         <div class="bot-right p-l-40">
           <p class="f-fs18 p-b-20">下单</p>
           <no-ssr>
-            <el-form ref="orderForm"
+            <el-form @submit.native.prevent ref="orderForm"
                      :model="orderForm"
                      label-width="100px"
                      v-loading="loading"

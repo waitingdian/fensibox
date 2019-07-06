@@ -58,7 +58,7 @@
       v-loading="loading"
       @close="close"
       width="480px;">
-      <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-form">
+      <el-form :model="form" @submit.native.prevent :rules="rules" ref="form" label-width="100px" class="demo-form">
         <el-form-item label="手机号" prop="phone">
           <el-input maxlength="11" v-model="form.phone" placeholder="请输入手机号"></el-input>
         </el-form-item>
